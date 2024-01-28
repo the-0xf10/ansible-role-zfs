@@ -109,10 +109,10 @@
       register: prepared_zpool_properties
 
     - name: manage zpool properties of '{{ zfs_pool.name }}'
-      ansible.builtin.command: "zpool set {{ (item.0 ~ '=' ~ item.1) | quote }} {{ zfs_pool.name }}"
+      ansible.builtin.command: "zpool set {{ (item.key ~ '=' ~ item.value) | quote }} {{ zfs_pool.name }}"
       changed_when: true
       loop_control:
-        label: "{{ item.0 }}={{ item.1 }}"
+        label: "{{ item.key }}={{ item.value }}"
       loop: "{{ prepared_zpool_properties.properties | default({}) | dict2items }}"
 
 
